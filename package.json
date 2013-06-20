@@ -1,0 +1,16 @@
+{
+  "name": "rtc-core",
+  "description": "Core definitions and functions for the rtc.io suite",
+  "author": "Damon Oehlman <damon.oehlman@nicta.com.au>",
+  "tags": [
+    "webrtc"
+  ],
+  "version": "0.0.0",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+  },
+  "contributors": []
+}
