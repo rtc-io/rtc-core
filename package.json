@@ -6,11 +6,12 @@
     "webrtc"
   ],
   "version": "0.0.0",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "tape": "~1.0.4"
   },
   "scripts": {
+    "test": "./node_modules/.bin/tape test/all.js"
   },
   "contributors": []
 }
