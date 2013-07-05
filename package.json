@@ -6,7 +6,11 @@
     "webrtc"
   ],
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "pull-stream": "~2.20.0",
+    "pull-pushable": "~1.1.3",
+    "uuid": "~1.4.1"
+  },
   "devDependencies": {
     "tape": "~1.0.4"
   },
