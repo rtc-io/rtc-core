@@ -46,16 +46,19 @@ inbound data for the peer.  As data is fed into the sink, data events are
 emitted and if the stream ends we get a 'disconnect' event for the peer.
 */
 Peer.prototype.inbound = function() {
-	var peer = this;
+	var peer = this,
+		sink;
 
-	return pull.Sink(function(read) {
+	sink = pull.Sink(function(read) {
 		read(null, function next(end, data) {
 			if (end) return peer.emit('disconnect');
 
-			peer.emit('data');
+			peer.emit('data', data);
 			read(null, next);			 
 		});
 	});
+
+	return sink();
 };
 
 /**
