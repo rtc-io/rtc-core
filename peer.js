@@ -1,148 +1,165 @@
-var EventEmitter = require('events').EventEmitter,
-	util = require('util'),
-	pull = require('pull-stream'),
-	uuid = require('uuid');
+/* jshint node: true */
 
+'use strict';
+
+var EventEmitter = require('events').EventEmitter;
+var util = require('util');
+var pull = require('pull-stream');
+var uuid = require('uuid');
+
+/**
+## Peer prototype reference
+
+The `Peer` prototype is a simple data type that helps the browser interface
+with the streaming interfaces used by the signaller transports.
+**/
 function Peer(opts) {
-	if (! (this instanceof Peer)) return new Peer(opts);
+  if (! (this instanceof Peer)) {
+    return new Peer(opts);
+  }
 
-	// inherited
-	EventEmitter.call(this);
+  // inherited
+  EventEmitter.call(this);
 
-	// initialise opts
-	opts = opts || {};
+  // initialise opts
+  opts = opts || {};
 
-	// initialise the peer id
-	this.id = opts.id || uuid.v4();
-	this.closed = false;
+  // initialise the peer id
+  this.id = opts.id || uuid.v4();
+  this.closed = false;
 
-	// initialise the messages array
-	this._messages = [];
+  // initialise the messages array
+  this._messages = [];
 }
 
 util.inherits(Peer, EventEmitter);
 module.exports = Peer;
 
 /**
-## close()
+### close()
 
 Close the current peer outbound sources
-*/
+**/
 Peer.prototype.close = function() {
-	// flag as closed and emit the close event
-	this.closed = true;
-	this.emit('close');
+  // flag as closed and emit the close event
+  this.closed = true;
+  this.emit('close');
 
-	// trigger a send event to wakeup waiting pull-stream sources
-	this.emit('send');
+  // trigger a send event to wakeup waiting pull-stream sources
+  this.emit('send');
 };
 
 
 /**
-## inbound()
+### inbound()
 
 The inbound function is used to return a pull-stream sink that represents 
 inbound data for the peer.  As data is fed into the sink, data events are 
 emitted and if the stream ends we get a 'disconnect' event for the peer.
-*/
+**/
 Peer.prototype.inbound = function() {
-	var peer = this,
-		sink;
+  var peer = this;
+  var sink = pull.Sink(function(read) {
+    read(null, function next(end, data) {
+      if (end) {
+        return peer.emit('disconnect');
+      }
 
-	sink = pull.Sink(function(read) {
-		read(null, function next(end, data) {
-			if (end) return peer.emit('disconnect');
+      peer.emit('data', data);
+      read(null, next);
+    });
+  });
 
-			peer.emit('data', data);
-			read(null, next);			 
-		});
-	});
-
-	return sink();
+  return sink();
 };
 
 /**
-## outbound()
+### outbound()
 
 The outbound function is used to return a pull-stream source that will
 supply messages that need to be sent out from the peer.
-*/
+**/
 Peer.prototype.outbound = function() {
-	var peer = this,
-		msgIndex = 0,
-		source;
+  var peer = this;
+  var msgIndex = 0;
 
-	// create the pull-source factory
-	source = pull.Source(function() {
-		var closed = false;
+  var source = pull.Source(function() {
+    var closed = false;
 
-		// on a reset event, reset the message index to 0
-		peer.on('reset', function() {
-			msgIndex = 0;
-		});
+    // on a reset event, reset the message index to 0
+    peer.on('reset', function() {
+      msgIndex = 0;
+    });
 
-		peer.once('close', function() {
-			closed = true;
-		});	
+    peer.once('close', function() {
+      closed = true;
+    });
 
-		return function(end, cb) {
-			if (end) return cb(end);
+    return function(end, cb) {
+      if (end) {
+        return cb(end);
+      }
 
-			// while the message index is less than the current length
-			// provide that data to the callback
-			if (msgIndex < peer._messages.length) {
-				return cb(null, peer._messages[msgIndex++]);
-			}
+      // while the message index is less than the current length
+      // provide that data to the callback
+      if (msgIndex < peer._messages.length) {
+        return cb(null, peer._messages[msgIndex++]);
+      }
 
-			// wait for data if we have exhausted the backlog
-			peer.once('send', function handleSend(data, index) {
-				if (peer.closed) return cb(true);
+      // wait for data if we have exhausted the backlog
+      peer.once('send', function handleSend(data, index) {
+        if (peer.closed) {
+          return cb(true);
+        }
 
-				// process the message
-				msgIndex = index + 1;
-				cb(null, data);
-			});
-		};
-	});
+        // process the message
+        msgIndex = index + 1;
+        cb(null, data);
+      });
+    };
+  });
 
-	return source();
+  return source();
 };
 
 /** 
-## reset()
+### reset()
 
 Reset the message backlog
-*/
+**/
 Peer.prototype.reset = function() {
-	// reset the messages list
-	this._messages = [];
+  // reset the messages list
+  this._messages = [];
 
-	// emit a reset event
-	this.emit('reset');
+  // emit a reset event
+  this.emit('reset');
 };
 
 /**
-## send(data)
-*/
+### send(data)
+**/
 Peer.prototype.send = function() {
-	var data, msgIndex;
+  var data;
+  var msgIndex;
 
-	// if the peer is closed, return false
-	if (this.closed) return false;
+  // if the peer is closed, return false
+  if (this.closed) {
+    return false;
+  }
 
-	// look for objects and convert to strings
-	data = [].slice.call(arguments).map(function(arg) {
-		if (typeof arg == 'object' && (! (arg instanceof String))) {
-			return JSON.stringify(arg);
-		}
+  // look for objects and convert to strings
+  data = [].slice.call(arguments).map(function(arg) {
+    if (typeof arg == 'object' && (! (arg instanceof String))) {
+      return JSON.stringify(arg);
+    }
 
-		return arg;
-	}).join('|');
+    return arg;
+  }).join('|');
 
-	// add data into the messages array
-	this._messages[msgIndex = this._messages.length] = data;
-	this.emit('send', data, msgIndex);
+  // add data into the messages array
+  this._messages[msgIndex = this._messages.length] = data;
+  this.emit('send', data, msgIndex);
 
-	// return the message index
-	return msgIndex;
+  // return the message index
+  return msgIndex;
 };

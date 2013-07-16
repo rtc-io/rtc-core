@@ -1,3 +1,7 @@
+/* jshint node: true */
+
+'use strict';
+
 /**
 # rtc.io errorcodes
 
@@ -7,25 +11,29 @@ problems between client and server components in the rtc.io stack.
 */
 // create the codes array
 var codes = module.exports = function() {
-    return Object.keys(codes).map(function(longCode) {
-        return codes[longCode]
-    }).filter(function(value) {
-        return typeof value == 'string'
-    });
+  return Object.keys(codes).map(function(longCode) {
+    return codes[longCode];
+  }).filter(function(value) {
+    return typeof value == 'string';
+  });
 };
 
 var messages = {
-    HSIP: 'An existing handshake is already in progress',
-    HSSIM: 'A handshake process has been initiated by the target endpoint'
+  HSIP: 'An existing handshake is already in progress',
+  HSSIM: 'A handshake process has been initiated by the target endpoint',
+  REQCHAN: 'A channel is required to initiate a peer connection'
 };
 
 // initialise the individual error codes
 codes.HANDSHAKE_IN_PROGRESS = 'HSIP';
 codes.SIMULTANEOUS_DIAL = 'HSSIM';
+codes.REQUIRE_CHANNEL = 'REQCHAN';
 
 codes.toError = function(code) {
-    var error = new Error(messages[code] || 'An unknown RTC error has occurred');
-    error.code = code;
+  var msg = messages[code] || 'An unknown RTC error has occurred';
+  var error = new Error(msg);
 
-    return error;
+  error.code = code;
+
+  return error;
 };

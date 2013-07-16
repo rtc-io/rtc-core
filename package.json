@@ -15,6 +15,7 @@
     "tape": "~1.0.4"
   },
   "scripts": {
+    "gendocs": "cat index.js peer.js errorcodes.js | emu > README.md",
     "test": "./node_modules/.bin/tape test/all.js"
   },
   "contributors": []
