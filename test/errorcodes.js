@@ -7,4 +7,5 @@ test('errorcodes have not been changed', function(t) {
 	t.plan(errorcodes().length);
 	t.equal(errorcodes.HANDSHAKE_IN_PROGRESS, 'HSIP');
 	t.equal(errorcodes.SIMULTANEOUS_DIAL, 'HSSIM');
+  t.equal(errorcodes.REQUIRE_CHANNEL, 'REQCHAN');
 });
