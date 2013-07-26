@@ -18,7 +18,6 @@
     "gendocs": "cat index.js peer.js errorcodes.js | $(npm bin)/emu > README.md",
     "test": "$(npm bin)/tape test/all.js"
   },
-  "contributors": [],
   "main": "index.js",
   "directories": {
     "test": "test"
