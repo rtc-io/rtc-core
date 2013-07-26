@@ -1,7 +1,6 @@
 {
   "name": "rtc-core",
   "description": "Core definitions and functions for the rtc.io suite",
-  "author": "Damon Oehlman <damon.oehlman@nicta.com.au>",
   "tags": [
     "webrtc"
   ],
@@ -17,7 +16,23 @@
   },
   "scripts": {
     "gendocs": "cat index.js peer.js errorcodes.js | $(npm bin)/emu > README.md",
-    "test": "./node_modules/.bin/tape test/all.js"
+    "test": "$(npm bin)/tape test/all.js"
   },
-  "contributors": []
+  "contributors": [],
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rtc-io/rtc-core.git"
+  },
+  "keywords": [
+    "webrtc"
+  ],
+  "author": "NICTA (http://opennicta.com/) and contributors",
+  "license": "Apache2",
+  "bugs": {
+    "url": "https://github.com/rtc-io/rtc-core/issues"
+  }
 }
