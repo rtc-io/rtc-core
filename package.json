@@ -15,7 +15,7 @@
     "emu": "0.0.2"
   },
   "scripts": {
-    "gendocs": "cat index.js peer.js errorcodes.js | $(npm bin)/emu > README.md",
+    "gendocs": "cat index.js $(find *.js -not -path \"index.js\") | $(npm bin)/emu > README.md",
     "test": "$(npm bin)/tape test/all.js"
   },
   "main": "index.js",
