@@ -29,3 +29,14 @@ supply messages that need to be sent out from the peer.
 Reset the message backlog
 
 ### send(data)
+
+## Core Error Codes
+
+### HSIP
+
+Handshake in Progress.
+
+### REQCHAN
+
+This error condition is encountered when a peer connection is used without
+being assigned a valid signalling channel to start with.

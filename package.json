@@ -12,10 +12,11 @@
   },
   "devDependencies": {
     "pull-pushable": "~1.1.3",
-    "tape": "~1.0.4"
+    "tape": "~1.0.4",
+    "emu": "0.0.2"
   },
   "scripts": {
-    "gendocs": "cat index.js peer.js errorcodes.js | emu > README.md",
+    "gendocs": "cat index.js peer.js errorcodes.js | $(npm bin)/emu > README.md",
     "test": "./node_modules/.bin/tape test/all.js"
   },
   "contributors": []
