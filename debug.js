@@ -31,4 +31,6 @@ var debug = module.exports = function(section) {
 };
 
 // export the active sections
-debug.active = activeSections;
+debug.enable = function() {
+  activeSections = [].slice.call(arguments);
+};
