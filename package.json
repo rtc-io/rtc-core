@@ -4,9 +4,8 @@
   "tags": [
     "webrtc"
   ],
-  "version": "0.2.3",
-  "dependencies": {
-  },
+  "version": "0.3.0",
+  "dependencies": {},
   "devDependencies": {
     "tape": "~1.0.4",
     "emu": "0.0.2"
