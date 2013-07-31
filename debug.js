@@ -2,7 +2,7 @@
 /* global console: false */
 'use strict';
 
-var activeSections = ['*'];
+var activeSections = [];
 
 /**
   ## rtc/lib/debug
