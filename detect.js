@@ -1,5 +1,6 @@
-
+/* jshint node: true */
 /* global window: false */
+/* global navigator: false */
 
 'use strict';
 
@@ -23,7 +24,7 @@ This would provide whatever the browser prefixed version of the
 RTCPeerConnection is available (`webkitRTCPeerConnection`, 
 `mozRTCPeerConnection`, etc).
 **/
-module.exports = function(target, prefixes) {
+var detect = module.exports = function(target, prefixes) {
   var prefixIdx;
   var prefix;
   var testName;
@@ -46,7 +47,17 @@ module.exports = function(target, prefixes) {
                             target);
 
     if (typeof hostObject[testName] == 'function') {
+      // update the last used prefix
+      detect.browser = detect.browser || prefix.toLowerCase();
+
+      // return the host object member
       return hostObject[testName];
     }
   }
 };
+
+// detect mozilla (yes, this feels dirty)
+detect.moz = !!navigator.mozGetUserMedia;
+
+// initialise the prefix as unknown
+detect.browser = undefined;
