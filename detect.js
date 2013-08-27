@@ -46,7 +46,7 @@ var detect = module.exports = function(target, prefixes) {
                             target.charAt(0).toUpperCase() + target.slice(1) :
                             target);
 
-    if (typeof hostObject[testName] == 'function') {
+    if (typeof hostObject[testName] != 'undefined') {
       // update the last used prefix
       detect.browser = detect.browser || prefix.toLowerCase();
 
