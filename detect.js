@@ -51,13 +51,13 @@ var detect = module.exports = function(target, prefixes) {
       detect.browser = detect.browser || prefix.toLowerCase();
 
       // return the host object member
-      return hostObject[testName];
+      return hostObject[target] = hostObject[testName];
     }
   }
 };
 
 // detect mozilla (yes, this feels dirty)
-detect.moz = !!navigator.mozGetUserMedia;
+detect.moz = typeof navigator != 'undefined' && !!navigator.mozGetUserMedia;
 
 // initialise the prefix as unknown
 detect.browser = undefined;
