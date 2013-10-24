@@ -32,3 +32,8 @@ Handshake in Progress.
 
 This error condition is encountered when a peer connection is used without
 being assigned a valid signalling channel to start with.
+
+## rtc-core/reset
+
+This is a simple, cross-browser method for resetting a media element
+back to a initial state after having media attached.
