@@ -7,8 +7,7 @@
   "version": "0.5.0",
   "dependencies": {},
   "devDependencies": {
-    "tape": "~1.0.4",
-    "emu": "0.0.2"
+    "tape": "~2.3.0"
   },
   "scripts": {
     "gendocs": "gendocs > README.md",
@@ -25,6 +24,13 @@
   "keywords": [
     "webrtc"
   ],
+  "testling": {
+    "files": "test/all.js",
+    "browsers": [
+      "chrome/30..canary",
+      "firefox/nightly"
+    ]
+  },
   "author": "NICTA (http://opennicta.com/) and contributors",
   "license": "Apache2",
   "bugs": {
