@@ -31,9 +31,10 @@
       "firefox/nightly"
     ]
   },
-  "author": "NICTA (http://opennicta.com/) and contributors",
-  "license": "Apache2",
+  "author": "NICTA (http://opennicta.com/)",
+  "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/rtc-io/rtc-core/issues"
-  }
+  },
+  "homepage": "https://github.com/rtc-io/rtc-core"
 }
