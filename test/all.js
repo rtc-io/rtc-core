@@ -1,2 +1,1 @@
-require('./errorcodes');
-require('./errormessages');
+require('./detect');
