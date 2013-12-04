@@ -8,7 +8,7 @@
 ## rtc-core/detect
 
 A browser detection helper for accessing prefix-free versions of the various
-WebRTC types. 
+WebRTC types.
 
 ### Example Usage
 
@@ -21,7 +21,7 @@ var RTCPeerConnection = detect('RTCPeerConnection');
 ```
 
 This would provide whatever the browser prefixed version of the
-RTCPeerConnection is available (`webkitRTCPeerConnection`, 
+RTCPeerConnection is available (`webkitRTCPeerConnection`,
 `mozRTCPeerConnection`, etc).
 **/
 var detect = module.exports = function(target, prefixes) {
@@ -30,7 +30,7 @@ var detect = module.exports = function(target, prefixes) {
   var testName;
   var hostObject = this || window;
 
-  // initialise to default prefixes 
+  // initialise to default prefixes
   // (reverse order as we use a decrementing for loop)
   prefixes = (prefixes || ['ms', 'o', 'moz', 'webkit']).concat('');
 
@@ -40,7 +40,7 @@ var detect = module.exports = function(target, prefixes) {
 
     // construct the test class name
     // if we have a prefix ensure the target has an uppercase first character
-    // such that a test for getUserMedia would result in a 
+    // such that a test for getUserMedia would result in a
     // search for webkitGetUserMedia
     testName = prefix + (prefix ?
                             target.charAt(0).toUpperCase() + target.slice(1) :
