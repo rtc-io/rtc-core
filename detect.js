@@ -28,7 +28,12 @@ var detect = module.exports = function(target, prefixes) {
   var prefixIdx;
   var prefix;
   var testName;
-  var hostObject = this || window;
+  var hostObject = this || (typeof window != 'undefined' ? window : undefined);
+
+  // if we have no host object, then abort
+  if (! hostObject) {
+    return;
+  }
 
   // initialise to default prefixes
   // (reverse order as we use a decrementing for loop)
