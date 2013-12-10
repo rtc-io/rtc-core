@@ -4,6 +4,12 @@
 
 'use strict';
 
+var browsers = {
+  chrome: /Chrom(?:e|ium)\/([0-9]+)\./,
+  firefox: /Firefox\/([0-9]+)\./,
+  opera: /Opera\/([0-9]+)\./
+};
+
 /**
 ## rtc-core/detect
 
@@ -64,5 +70,17 @@ var detect = module.exports = function(target, prefixes) {
 // detect mozilla (yes, this feels dirty)
 detect.moz = typeof navigator != 'undefined' && !!navigator.mozGetUserMedia;
 
-// initialise the prefix as unknown
-detect.browser = undefined;
+// time to do some useragent sniffing - it feels dirty because it is :/
+if (typeof navigator != 'undefined') {
+  Object.keys(browsers).forEach(function(key) {
+    var match = browsers[key].exec(navigator.userAgent);
+    if (match) {
+      detect.browser = key;
+      detect.version = parseInt(match[1], 10);
+    }
+  });
+}
+else {
+  detect.browser = 'node';
+  detect.version = '?'; // TODO: get node version
+}
