@@ -76,11 +76,11 @@ if (typeof navigator != 'undefined') {
     var match = browsers[key].exec(navigator.userAgent);
     if (match) {
       detect.browser = key;
-      detect.version = parseInt(match[1], 10);
+      detect.browserVersion = detect.version = parseInt(match[1], 10);
     }
   });
 }
 else {
   detect.browser = 'node';
-  detect.version = '?'; // TODO: get node version
+  detect.browserVersion = detect.version = '?'; // TODO: get node version
 }
