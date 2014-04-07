@@ -6,7 +6,8 @@ are used across the rtc.io suite.
 
 [![NPM](https://nodei.co/npm/rtc-core.png)](https://nodei.co/npm/rtc-core/)
 
-[![unstable](http://hughsk.github.io/stability-badges/dist/unstable.svg)](http://github.com/hughsk/stability-badges)
+[![Build Status](https://img.shields.io/travis/rtc-io/rtc-core.svg?branch=master)](https://travis-ci.org/rtc-io/rtc-core)
+![unstable](https://img.shields.io/badge/stability-unstable-yellowgreen.svg)
 
 ## rtc-core/detect
 
@@ -27,6 +28,16 @@ This would provide whatever the browser prefixed version of the
 RTCPeerConnection is available (`webkitRTCPeerConnection`,
 `mozRTCPeerConnection`, etc).
 
+## rtc-core/env
+
+```
+env(browser, spec?, fn?) ==> Boolean
+```
+
+The `env` helper is useful for customizing the behaviour of your WebRTC
+application based on browser environment and also specific versions of
+the browser (using a [semver](http://semver.org/) based spec).
+
 ## rtc-core/reset
 
 This is a simple, cross-browser method for resetting a media element
@@ -36,7 +47,7 @@ back to a initial state after having media attached.
 
 ### Apache 2.0
 
-Copyright 2013 National ICT Australia Limited (NICTA)
+Copyright 2013 - 2014 National ICT Australia Limited (NICTA)
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

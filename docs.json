@@ -1,10 +1,12 @@
 {
   "badges": {
     "nodeico": true,
+    "travis": true,
     "stability": "unstable"
   },
 
   "license": {
+    "year": "2013 - 2014",
     "holder": "National ICT Australia Limited (NICTA)"
   }
 }
