@@ -1,19 +1,17 @@
 {
   "name": "rtc-core",
   "description": "Core definitions and functions for the rtc.io suite",
-  "tags": [
-    "webrtc"
-  ],
   "version": "0.7.1",
   "dependencies": {
-    "semver": "^2.2.1"
+    "semver": "^2"
   },
   "devDependencies": {
-    "tape": "^2"
+    "tape": "^2",
+    "zuul": "^1"
   },
   "scripts": {
     "gendocs": "gendocs > README.md",
-    "test": "$(npm bin)/tape test/all.js"
+    "test": "zuul -- test/all.js"
   },
   "main": "index.js",
   "directories": {
@@ -26,14 +24,6 @@
   "keywords": [
     "webrtc"
   ],
-  "testling": {
-    "files": "test/all.js",
-    "browsers": [
-      "chrome/30..canary",
-      "firefox/nightly"
-    ]
-  },
-  "author": "NICTA (http://opennicta.com/)",
   "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/rtc-io/rtc-core/issues"
