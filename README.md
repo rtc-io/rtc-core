@@ -28,13 +28,13 @@ This would provide whatever the browser prefixed version of the
 RTCPeerConnection is available (`webkitRTCPeerConnection`,
 `mozRTCPeerConnection`, etc).
 
-## rtc-core/env
+## rtc-core/match
 
 ```
-env(browser, spec?, fn?) ==> Boolean
+match(browser, spec?, fn?) ==> Boolean
 ```
 
-The `env` helper is useful for customizing the behaviour of your WebRTC
+The `match` helper is useful for customizing the behaviour of your WebRTC
 application based on browser environment and also specific versions of
 the browser (using a [semver](http://semver.org/) based spec).
 
