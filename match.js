@@ -15,17 +15,25 @@ var semver = require('semver');
   application based on browser environment and also specific versions of
   the browser (using a [semver](http://semver.org/) based spec).
 
+  <<< examples/match.js
+
 **/
 module.exports = function(browser, spec, fn) {
   var isMatch = false;
+  var version = semver.clean(detect.version);
 
   if (typeof spec == 'function') {
     fn = spec;
-    spec = '*';
+    spec = '';
   }
 
-  // if the spec has not been defined (or is invalid), default to '*'
-  spec = semver.clean(spec) || '*';
+  // ensure spec is a string value
+  spec = spec || '';
+
+  // if the version it not valid, then error out
+  if (spec && (! version)) {
+    throw new Error('Browser version is not semver compatible: ' + detect.version);
+  }
 
   // first check the browser name
   if (browser instanceof RegExp) {
@@ -36,7 +44,7 @@ module.exports = function(browser, spec, fn) {
   }
 
   // check the spec
-  isMatch = isMatch && semver.satisfies(detect.version, spec);
+  isMatch = isMatch && semver.satisfies(version, spec);
 
   // if we have a match and a handler, then invoke the handler
   if (isMatch && typeof fn == 'function') {
