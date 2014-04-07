@@ -4,6 +4,7 @@
 
 'use strict';
 
+var semver = require('semver');
 var browsers = {
   chrome: /Chrom(?:e|ium)\/([0-9\.]+)(:?\s|$)/,
   firefox: /Firefox\/([0-9\.]+)(?:\s|$)/,
@@ -76,11 +77,25 @@ if (typeof navigator != 'undefined') {
     var match = browsers[key].exec(navigator.userAgent);
     if (match) {
       detect.browser = key;
-      detect.browserVersion = detect.version = match[1];
+      detect.browserVersion = detect.version = parseVersion(match[1]);
     }
   });
 }
 else {
   detect.browser = 'node';
-  detect.browserVersion = detect.version = process.version.substr(1);
+  detect.browserVersion = detect.version = parseVersion(process.version.substr(1));
+}
+
+function parseVersion(version) {
+  // get the version parts
+  var versionParts = version.split('.').slice(0, 3);
+
+  // while we don't have enough parts for the semver spec, add more zeros
+  while (versionParts.length < 3) {
+    versionParts.push('0');
+  }
+
+  // return the version cleaned version (hopefully)
+  // falling back to the provided version if required
+  return semver.clean(versionParts.join('.')) || version;
 }
