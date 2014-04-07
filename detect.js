@@ -5,30 +5,30 @@
 'use strict';
 
 var browsers = {
-  chrome: /Chrom(?:e|ium)\/([0-9]+)\./,
-  firefox: /Firefox\/([0-9]+)\./,
-  opera: /Opera\/([0-9]+)\./
+  chrome: /Chrom(?:e|ium)\/([0-9\.]+)(:?\s|$)/,
+  firefox: /Firefox\/([0-9\.]+)(?:\s|$)/,
+  opera: /Opera\/([0-9\.]+)(?:\s|$)/
 };
 
 /**
-## rtc-core/detect
+  ## rtc-core/detect
 
-A browser detection helper for accessing prefix-free versions of the various
-WebRTC types.
+  A browser detection helper for accessing prefix-free versions of the various
+  WebRTC types.
 
-### Example Usage
+  ### Example Usage
 
-If you wanted to get the native `RTCPeerConnection` prototype in any browser
-you could do the following:
+  If you wanted to get the native `RTCPeerConnection` prototype in any browser
+  you could do the following:
 
-```js
-var detect = require('rtc-core/detect'); // also available in rtc/detect
-var RTCPeerConnection = detect('RTCPeerConnection');
-```
+  ```js
+  var detect = require('rtc-core/detect'); // also available in rtc/detect
+  var RTCPeerConnection = detect('RTCPeerConnection');
+  ```
 
-This would provide whatever the browser prefixed version of the
-RTCPeerConnection is available (`webkitRTCPeerConnection`,
-`mozRTCPeerConnection`, etc).
+  This would provide whatever the browser prefixed version of the
+  RTCPeerConnection is available (`webkitRTCPeerConnection`,
+  `mozRTCPeerConnection`, etc).
 **/
 var detect = module.exports = function(target, prefixes) {
   var prefixIdx;
@@ -76,11 +76,11 @@ if (typeof navigator != 'undefined') {
     var match = browsers[key].exec(navigator.userAgent);
     if (match) {
       detect.browser = key;
-      detect.browserVersion = detect.version = parseInt(match[1], 10);
+      detect.browserVersion = detect.version = match[1];
     }
   });
 }
 else {
   detect.browser = 'node';
-  detect.browserVersion = detect.version = '?'; // TODO: get node version
+  detect.browserVersion = detect.version = process.version.substr(1);
 }
