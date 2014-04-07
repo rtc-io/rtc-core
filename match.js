@@ -13,7 +13,9 @@ var semver = require('semver');
 
   The `match` helper is useful for customizing the behaviour of your WebRTC
   application based on browser environment and also specific versions of
-  the browser (using a [semver](http://semver.org/) based spec).
+  the browser (using a [semver](http://semver.org/) based spec).  The optional
+  `fn` argument allows you to provide a function you wish to be called given
+  a match rather as this is sometimes useful.
 
   <<< examples/match.js
 
