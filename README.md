@@ -38,6 +38,27 @@ The `match` helper is useful for customizing the behaviour of your WebRTC
 application based on browser environment and also specific versions of
 the browser (using a [semver](http://semver.org/) based spec).
 
+```js
+var detect = require('rtc-core/detect');
+var match = require('rtc-core/match');
+
+if (match('chrome', '>= 35')) {
+  console.log('matched >= chrome 35, actual version: ' + detect.version);
+}
+else if (match('chrome', '32 - 34')) {
+  console.log('matched chrome 32 - 34, actual version: ' + detect.version);
+}
+else if (match('chrome', '^31')) {
+  console.log('matched chrome 31, actual version: ' + detect.version)
+}
+else if (match('chrome')) {
+  console.log('matched chrome (any version), actual version: ' + detect.version);
+}
+else {
+  console.log('not running chrome, browser: ' + detect.browser + ', version: ' + detect.version);
+}
+```
+
 ## rtc-core/reset
 
 This is a simple, cross-browser method for resetting a media element
