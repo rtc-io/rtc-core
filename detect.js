@@ -80,6 +80,9 @@ if (typeof navigator != 'undefined') {
       detect.browserVersion = detect.version = parseVersion(match[1]);
     }
   });
+
+  // if the browser has not been detected, then set the browser to unknown
+  detect.browser = detect.browser || 'unknown';
 }
 else {
   detect.browser = 'node';
