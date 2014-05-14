@@ -6,9 +6,18 @@
 
 var semver = require('semver');
 var browsers = {
-  chrome: /Chrom(?:e|ium)\/([0-9\.]+)(:?\s|$)/,
-  firefox: /Firefox\/([0-9\.]+)(?:\s|$)/,
-  opera: /Opera\/([0-9\.]+)(?:\s|$)/
+  chrome: [
+    /Chrom(?:e|ium)\/([0-9\.]+)(:?\s|$)/
+  ],
+  firefox: [
+    /Firefox\/([0-9\.]+)(?:\s|$)/
+  ],
+  opera: [
+    /Opera\/([0-9\.]+)(?:\s|$)/
+  ],
+  ie: [
+    /Trident\/7\.0.*rv\:([0-9\.]+)\).*Gecko$/   // IE11
+  ]
 };
 
 /**
@@ -74,7 +83,11 @@ detect.moz = typeof navigator != 'undefined' && !!navigator.mozGetUserMedia;
 // time to do some useragent sniffing - it feels dirty because it is :/
 if (typeof navigator != 'undefined') {
   Object.keys(browsers).forEach(function(key) {
-    var match = browsers[key].exec(navigator.userAgent);
+    // get the first matching regex
+    var match = browsers[key].map(function(regex) {
+      return regex.exec(navigator.userAgent);
+    }).filter(Boolean)[0];
+
     if (match) {
       detect.browser = key;
       detect.browserVersion = detect.version = parseVersion(match[1]);
