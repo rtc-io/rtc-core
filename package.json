@@ -1,7 +1,7 @@
 {
   "name": "rtc-core",
   "description": "Core definitions and functions for the rtc.io suite",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "dependencies": {
     "semver": "^2"
   },
