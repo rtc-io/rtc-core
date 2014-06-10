@@ -1,25 +1,20 @@
 var detect = require('./detect');
-var match = require('./match');
 var url = require('url');
-
-function useNewFormat() {
-  return match('firefox') || match('chrome', '>=36');
-}
 
 module.exports = function(server) {
   var uri;
   var auth;
 
   // if we have a url parameter parse it
-  if (server && server.url && useNewFormat()) {
+  if (server && server.url) {
     uri = url.parse(server.url);
     auth = (uri.auth || '').split(':');
 
     return {
-      url: uri.protocol + uri.host,
-      urls: [ uri.protocol + uri.host ],
+      url: uri.protocol + uri.host + (uri.search || ''),
+      urls: [ uri.protocol + uri.host + (uri.search || '') ],
       username: auth[0],
-      credential: auth[1]
+      credential: server.credential || auth[1]
     };
   }
 
