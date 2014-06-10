@@ -8,7 +8,8 @@ var stunFormatA = [
 ];
 
 var turnFormatA = [
-  { url: 'turn:tmp@hoth.rtc.io:3478' }
+  { url: 'turn:tmp:test@hoth.rtc.io:3478' },
+  { url: 'turn:tmp:test@hoth.rtc.io' }
 ];
 
 test('can detect an RTCPeerConnection constructor', function(t) {
@@ -31,5 +32,23 @@ test('can create a connection with a single turn server', function(t) {
 
   t.plan(2);
   t.ok(config = { iceServers: [ turnFormatA[0] ].map(normalize) }, 'created config');
+  t.ok(pc = new RTCPeerConnection(config), 'created pc');
+});
+
+test('can create a connection with a single turn server (no port)', function(t) {
+  var config;
+  var pc;
+
+  t.plan(2);
+  t.ok(config = { iceServers: [ turnFormatA[1] ].map(normalize) }, 'created config');
+  t.ok(pc = new RTCPeerConnection(config), 'created pc');
+});
+
+test('can create a connection with multiple turn servers', function(t) {
+  var config;
+  var pc;
+
+  t.plan(2);
+  t.ok(config = { iceServers: turnFormatA.map(normalize) }, 'created config');
   t.ok(pc = new RTCPeerConnection(config), 'created pc');
 });
