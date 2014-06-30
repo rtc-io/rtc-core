@@ -3,7 +3,6 @@
   "description": "Core definitions and functions for the rtc.io suite",
   "version": "2.0.0",
   "dependencies": {
-    "semver": "^2"
   },
   "devDependencies": {
     "tape": "^2",
