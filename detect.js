@@ -4,21 +4,7 @@
 
 'use strict';
 
-var semver = require('semver');
-var browsers = {
-  chrome: [
-    /Chrom(?:e|ium)\/([0-9\.]+)(:?\s|$)/
-  ],
-  firefox: [
-    /Firefox\/([0-9\.]+)(?:\s|$)/
-  ],
-  opera: [
-    /Opera\/([0-9\.]+)(?:\s|$)/
-  ],
-  ie: [
-    /Trident\/7\.0.*rv\:([0-9\.]+)\).*Gecko$/   // IE11
-  ]
-};
+var browser = require('detect-browser');
 
 /**
   ## rtc-core/detect
@@ -80,38 +66,6 @@ var detect = module.exports = function(target, prefixes) {
 // detect mozilla (yes, this feels dirty)
 detect.moz = typeof navigator != 'undefined' && !!navigator.mozGetUserMedia;
 
-// time to do some useragent sniffing - it feels dirty because it is :/
-if (typeof navigator != 'undefined') {
-  Object.keys(browsers).forEach(function(key) {
-    // get the first matching regex
-    var match = browsers[key].map(function(regex) {
-      return regex.exec(navigator.userAgent);
-    }).filter(Boolean)[0];
-
-    if (match) {
-      detect.browser = key;
-      detect.browserVersion = detect.version = parseVersion(match[1]);
-    }
-  });
-
-  // if the browser has not been detected, then set the browser to unknown
-  detect.browser = detect.browser || 'unknown';
-}
-else {
-  detect.browser = 'node';
-  detect.browserVersion = detect.version = parseVersion(process.version.substr(1));
-}
-
-function parseVersion(version) {
-  // get the version parts
-  var versionParts = version.split('.').slice(0, 3);
-
-  // while we don't have enough parts for the semver spec, add more zeros
-  while (versionParts.length < 3) {
-    versionParts.push('0');
-  }
-
-  // return the version cleaned version (hopefully)
-  // falling back to the provided version if required
-  return semver.clean(versionParts.join('.')) || version;
-}
+// set the browser and browser version
+detect.browser = browser.name;
+detect.browserVersion = detect.version = browser.version;
