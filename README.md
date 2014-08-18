@@ -6,10 +6,9 @@ are used across the rtc.io suite.
 
 [![NPM](https://nodei.co/npm/rtc-core.png)](https://nodei.co/npm/rtc-core/)
 
-[![Build Status](https://img.shields.io/travis/rtc-io/rtc-core.svg?branch=master)](https://travis-ci.org/rtc-io/rtc-core)
-![unstable](https://img.shields.io/badge/stability-unstable-yellowgreen.svg)
+[![Build Status](https://img.shields.io/travis/rtc-io/rtc-core.svg?branch=master)](https://travis-ci.org/rtc-io/rtc-core) [![unstable](https://img.shields.io/badge/stability-unstable-yellowgreen.svg)](https://github.com/dominictarr/stability#unstable) 
 
-## rtc-core/detect
+### `rtc-core/detect`
 
 A browser detection helper for accessing prefix-free versions of the various
 WebRTC types.
@@ -28,41 +27,19 @@ This would provide whatever the browser prefixed version of the
 RTCPeerConnection is available (`webkitRTCPeerConnection`,
 `mozRTCPeerConnection`, etc).
 
-## rtc-core/match
-
-```
-match(browser, spec?, fn?) ==> Boolean
-```
-
-The `match` helper is useful for customizing the behaviour of your WebRTC
-application based on browser environment and also specific versions of
-the browser (using a [semver](http://semver.org/) based spec).
-
-```js
-var detect = require('rtc-core/detect');
-var match = require('rtc-core/match');
-
-if (match('chrome', '>= 35')) {
-  console.log('matched >= chrome 35, actual version: ' + detect.version);
-}
-else if (match('chrome', '32 - 34')) {
-  console.log('matched chrome 32 - 34, actual version: ' + detect.version);
-}
-else if (match('chrome', '^31')) {
-  console.log('matched chrome 31, actual version: ' + detect.version)
-}
-else if (match('chrome')) {
-  console.log('matched chrome (any version), actual version: ' + detect.version);
-}
-else {
-  console.log('not running chrome, browser: ' + detect.browser + ', version: ' + detect.version);
-}
-```
-
-## rtc-core/reset
+### `rtc-core/reset`
 
 This is a simple, cross-browser method for resetting a media element
 back to a initial state after having media attached.
+
+### `rtc-core/wait-connected`
+
+`waitConnected(pc, callback)`
+
+A simple helper function that will monitor `iceconnectionstatechange` events
+and wait until a connected `iceConnectionState` has been triggered (either
+`connected` or `completed`).  Once this state has been achieved the event
+listener will be removed and a callback fired.
 
 ## License(s)
 

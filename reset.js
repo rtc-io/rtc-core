@@ -2,7 +2,7 @@
 'use strict';
 
 /**
-  ## rtc-core/reset
+  ### `rtc-core/reset`
 
   This is a simple, cross-browser method for resetting a media element
   back to a initial state after having media attached.

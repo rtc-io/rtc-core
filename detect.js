@@ -7,7 +7,7 @@
 var browser = require('detect-browser');
 
 /**
-  ## rtc-core/detect
+  ### `rtc-core/detect`
 
   A browser detection helper for accessing prefix-free versions of the various
   WebRTC types.
