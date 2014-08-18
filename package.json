@@ -6,6 +6,7 @@
     "detect-browser": "^1.0.0"
   },
   "devDependencies": {
+    "peerpair": "^1.0.0",
     "tape": "^2",
     "zuul": "^1"
   },
