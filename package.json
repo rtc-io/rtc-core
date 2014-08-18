@@ -8,11 +8,11 @@
   "devDependencies": {
     "peerpair": "^1.0.0",
     "tape": "^2",
-    "zuul": "^1"
+    "testling": "^1.7.0"
   },
   "scripts": {
     "gendocs": "gendocs > README.md",
-    "test": "zuul -- test/all.js"
+    "test": "testling -x ./.travis/start-$BROWSER.sh"
   },
   "main": "index.js",
   "directories": {
@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/rtc-io/rtc-core/issues"
   },
-  "homepage": "https://github.com/rtc-io/rtc-core"
+  "homepage": "https://github.com/rtc-io/rtc-core",
+  "testling": {
+    "files": "test/all.js"
+  }
 }
