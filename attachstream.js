@@ -1,10 +1,23 @@
 var canUseURL = typeof window.URL != 'undefined';
 
-module.exports = function(el, stream, callback) {
+module.exports = function(stream, el, opts, callback) {
+
+  if (typeof opts == 'function') {
+    callback = opts;
+    opts = {};
+  }
 
   function ready() {
+    var autoplay = (opts || {}).autoplay;
+
     el.removeEventListener('canplay', ready);
     el.removeEventListener('loadedmetadata', ready);
+
+    if (typeof autoplay == 'undefined' || autoplay) {
+      el.play();
+    }
+
+    callback();
   }
 
   // check for srcObject
