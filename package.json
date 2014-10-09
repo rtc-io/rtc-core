@@ -6,6 +6,7 @@
     "detect-browser": "^1.0.0"
   },
   "devDependencies": {
+    "freeice": "^2.1.0",
     "peerpair": "^1.0.0",
     "tape": "^2",
     "testling": "^1.7.0"
