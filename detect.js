@@ -26,20 +26,21 @@ var browser = require('detect-browser');
   RTCPeerConnection is available (`webkitRTCPeerConnection`,
   `mozRTCPeerConnection`, etc).
 **/
-var detect = module.exports = function(target, prefixes) {
+var detect = module.exports = function(target, opts) {
+  var attach = (opts || {}).attach;
   var prefixIdx;
   var prefix;
   var testName;
   var hostObject = this || (typeof window != 'undefined' ? window : undefined);
 
+  // initialise to default prefixes
+  // (reverse order as we use a decrementing for loop)
+  var prefixes = ((opts || {}).prefixes || ['ms', 'o', 'moz', 'webkit']).concat('');
+
   // if we have no host object, then abort
   if (! hostObject) {
     return;
   }
-
-  // initialise to default prefixes
-  // (reverse order as we use a decrementing for loop)
-  prefixes = (prefixes || ['ms', 'o', 'moz', 'webkit']).concat('');
 
   // iterate through the prefixes and return the class if found in global
   for (prefixIdx = prefixes.length; prefixIdx--; ) {
@@ -57,8 +58,11 @@ var detect = module.exports = function(target, prefixes) {
       // update the last used prefix
       detect.browser = detect.browser || prefix.toLowerCase();
 
-      // return the host object member
-      return hostObject[target] = hostObject[testName];
+      if (attach) {
+         hostObject[target] = hostObject[testName];
+      }
+
+      return hostObject[testName];
     }
   }
 };
