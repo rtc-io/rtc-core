@@ -3,7 +3,7 @@
   "description": "Core definitions and functions for the rtc.io suite",
   "version": "4.0.0",
   "dependencies": {
-    "detect-browser": "^1.0.0"
+    "detect-browser": "^4.6.0"
   },
   "devDependencies": {
     "freeice": "^2.1.0",

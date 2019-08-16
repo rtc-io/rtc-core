@@ -1,6 +1,7 @@
 language: node_js
 node_js:
-- 0.10.29
+- 6
+- lts/*
 
 env:
   matrix:
@@ -27,5 +28,5 @@ before_install:
 
 notifications:
   email:
-  - damon.oehlman@nicta.com.au
+  - nathan.oehlman@coviu.com
   irc: irc.freenode.org#rtc.io
