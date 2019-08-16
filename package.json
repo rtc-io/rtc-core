@@ -6,14 +6,16 @@
     "detect-browser": "^4.6.0"
   },
   "devDependencies": {
+    "broth": "^2.1.1",
+    "browserify": "^11.0.0",
     "freeice": "^2.1.0",
     "peerpair": "^1.0.0",
-    "tape": "^2",
-    "testling": "^1.7.0"
+    "tap-spec": "^4.0.2",
+    "travis-multirunner": "^4.5.0"
   },
   "scripts": {
     "gendocs": "gendocs > README.md",
-    "test": "testling -x ./.travis/start-$BROWSER.sh"
+    "test": "browserify test/all.js | broth start | tap-spec"
   },
   "main": "index.js",
   "directories": {
