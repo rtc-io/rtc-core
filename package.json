@@ -1,7 +1,7 @@
 {
   "name": "rtc-core",
   "description": "Core definitions and functions for the rtc.io suite",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "dependencies": {
     "detect-browser": "^4.6.0"
   },
