@@ -4,7 +4,7 @@
 
 'use strict';
 
-var browser = require('detect-browser');
+var browser = require('detect-browser').detect();
 
 /**
   ### `rtc-core/detect`

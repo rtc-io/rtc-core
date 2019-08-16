@@ -1,8 +1,14 @@
+sudo: false
+services:
+  - xvfb
 language: node_js
 node_js:
-- 0.10.29
+- 6
+- lts/*
 
 env:
+  global:
+    - CXX=g++-4.8
   matrix:
   - BROWSER=chrome  BVER=stable
   - BROWSER=chrome  BVER=beta
@@ -18,14 +24,20 @@ matrix:
     - env: BROWSER=chrome  BVER=unstable
     - env: BROWSER=firefox BVER=nightly
 
-before_install:
-  - mkdir -p .travis
-  - curl -s https://codeload.github.com/rtc-io/webrtc-testing-on-travis/tar.gz/master | tar -xz --strip-components=1 --directory .travis
-  - ./.travis/setup.sh
-  - export DISPLAY=:99.0
-  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
+before_script:
+  - ./node_modules/travis-multirunner/setup.sh
+
+after_failure:
+  - for file in *.log; do echo $file; echo "======================"; cat $file; done || true
 
 notifications:
   email:
-  - damon.oehlman@nicta.com.au
+  - nathan.oehlman@coviu.com
   irc: irc.freenode.org#rtc.io
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
