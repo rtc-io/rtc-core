@@ -73,3 +73,4 @@ detect.moz = typeof navigator != 'undefined' && !!navigator.mozGetUserMedia;
 // set the browser and browser version
 detect.browser = browser.name;
 detect.browserVersion = detect.version = browser.version;
+detect.os = browser.os;
