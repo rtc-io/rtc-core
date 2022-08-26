@@ -69,8 +69,18 @@ var detect = module.exports = function(target, opts) {
 
 // detect mozilla (yes, this feels dirty)
 detect.moz = typeof navigator != 'undefined' && !!navigator.mozGetUserMedia;
+// Newer Ipad versions cannot be detected just using useragent
+// And detect-browser does not plan to implement this feature
+// Ref: https://stackoverflow.com/questions/9038625/detect-if-device-is-ios/58065241#58065241
+const isIosMimic =
+navigator && navigator.maxTouchPoints &&
+	navigator.maxTouchPoints > 2 &&
+	/MacIntel/.test(navigator.platform);
 
 // set the browser and browser version
 detect.browser = browser.name;
 detect.browserVersion = detect.version = browser.version;
 detect.os = browser.os;
+if(isIosMimic) {
+  detect.os = 'iOS';
+}
