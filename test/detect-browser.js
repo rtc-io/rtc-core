@@ -15,3 +15,8 @@ test('browser has been detected', function(t) {
   t.equal(typeof detect.browser, 'string', 'browser value is a string');
   t.equal(detect.browser, detect.browser.toLowerCase(), 'browser reported all in lowercase');
 });
+
+test('OS has been detected', function(t) {
+  t.plan(1);
+  t.equal(typeof detect.os, 'string', 'browser value is a string');
+});
